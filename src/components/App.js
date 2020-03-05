@@ -16,7 +16,6 @@ export default class App extends Component {
     error: null,
     searchQuery: "",
     page: 1,
-    showModal: false,
     largeImage: null
   };
 
@@ -53,27 +52,19 @@ export default class App extends Component {
     });
   };
 
-  toggleModal = () => {
-    this.setState(state => ({ showModal: !state.showModal }));
-  };
-
-  // второй метод
   // webformatURL - ссылка на маленькое изображение для списка карточек
-  // largeImageURL - ссылка на большое изображение для модального окна
-  // onLargeImage = largeImgUrl => {
-  //   this.setState({ largeImage: largeImgUrl });
-  //   this.toggleModal();
-  // };
+  // largeImageURL - ссылка на большое изображение для модального окна;
 
-  onLargeImage = e => {
-    const choosePhoto = this.state.cards.find(item => item.id === e);
-    if (choosePhoto) {
-      this.setState({ largeImage: choosePhoto.largeImageURL }, this.toggleModal);
-    }
+  unsetLargeImageUrl= () => {
+      this.setState({ largeImage: null });
+    };
+
+  onLargeImage = largeImageURL => {
+      this.setState({ largeImage: largeImageURL });
   };
 
   render() {
-    const { cards, loading, error, showModal, largeImage } = this.state;
+    const { cards, loading, error, largeImage } = this.state;
 
     return (
       <Layout>
@@ -86,7 +77,7 @@ export default class App extends Component {
           <Loader type="Puff" color="#00BFFF" height={50} width={50} />
         )}
         {cards.length > 0 && !loading && <LoadMore onClick={this.fetchCards} />}
-        {showModal && <Modal src={largeImage} onClose={this.toggleModal} />}
+        {largeImage && <Modal src={largeImage} onClose={this.unsetLargeImageUrl} />}
       </Layout>
     );
   }

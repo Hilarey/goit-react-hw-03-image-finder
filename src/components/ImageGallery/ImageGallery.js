@@ -5,13 +5,14 @@ import styles from "./ImageGallery.module.css";
 
 const ImageGallery = ({ cards, onLargeImage }) => (
   <ul className={styles.imageGallery}>
-    {cards.map(({ id, webformatURL, tags }) => (
+    {cards.map(({ id, webformatURL, tags, largeImageURL }) => (
       <li key={id} className={styles.imageGalleryItem}>
         <ImageGalleryItem
           id={id}
           webformatURL={webformatURL}
           tags={tags}
           onLargeImage={onLargeImage}
+          largeImageURL={largeImageURL}
         />
       </li>
     ))}
